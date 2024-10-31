@@ -3,8 +3,6 @@
 
 all: check build format lint test
 
-version: 
-	cargo --version
 check:
 	cargo check
 
