@@ -2,8 +2,9 @@
 //user defined arguments and call lib.rs logic to handle them
 use clap::{Parser, Subcommand};
 use rusqlite::{Connection, Result};
-use sqlite::{create_table, load_data, query, query_delete, query_update}; //import library logic
-
+use rust_files::{create_table, load_data, query, query_delete, query_update}; //import library logic
+// sys.info for timing tests 
+//use std::time::{Duration, Instant};
 //Here we define a struct (or object) to hold our CLI arguments
 //for #[STUFF HERE] syntax, these are called attributes. Dont worry about them
 //for now, they define behavior for elements in rust.
