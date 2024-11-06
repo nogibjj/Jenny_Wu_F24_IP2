@@ -9,35 +9,25 @@ pub fn load_data(
     table_name: &str,
     file_path: &str,
 ) -> Result<(), Box<dyn Error>> {
-    let file = File::open(file_path).expect("failed to open the file path");
+    let file = File::open(file_path)?;
     let mut rdr = ReaderBuilder::new().from_reader(file);
 
     let insert_query = format!(
-        "INSERT INTO {} (incident_key,
-            occur_date,
-            boro,
-            vic_sex,
-            vic_race,) 
-            VALUES 
-            (?, ?, ?, ?)",
+        "INSERT INTO {} (incident_key, occur_date, boro, vic_sex, vic_race) VALUES (?, ?, ?, ?, ?)",
         table_name
     );
-    //this is a loop that expects a specific schema, you will need to change this if you have a different schema
+
     for result in rdr.records() {
-        let record = result.expect("failed to parse a record");
+        let record = result?;
         let incident_key: i32 = record[0].trim().parse()?;
         let occur_date: String = record[1].trim().to_string();
         let boro: String = record[2].trim().to_string();
         let vic_sex: String = record[3].trim().to_string();
         let vic_race: String = record[4].trim().to_string();
+
         println!(
-            "incident_key: {}, Occur Date: {}, Boro: {}, 
-            Victim Sex: {}, Victim Race: {}",
-            incident_key,
-            occur_date,
-            boro,
-            vic_sex,
-            vic_race,
+            "incident_key: {}, Occur Date: {}, Boro: {}, Victim Sex: {}, Victim Race: {}",
+            incident_key, occur_date, boro, vic_sex, vic_race,
         );
 
         conn.execute(
@@ -49,9 +39,9 @@ pub fn load_data(
                 vic_sex,
                 vic_race
             ],
-        )
-        .expect("failed to execute data into db table");
+        )?;
     }
+
     println!(
         "Data loaded successfully from '{}' into table '{}'.",
         file_path, table_name
