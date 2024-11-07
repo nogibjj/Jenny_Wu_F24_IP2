@@ -10,3 +10,4 @@ Optimized Rust Binary: Include a process that generates an optimized Rust binary
 README.md: A file that clearly explains what the project does, its dependencies, how to run the program, and how Gitlab Copilot was used.
 Github/Gitlab Actions: A workflow file that tests, builds, and lints your Rust code.
 Video Demo: A YouTube link in README.md showing a clear, concise walkthrough and demonstration of your CLI binary.
+

@@ -19,13 +19,13 @@ jobs:
           
       - name: install packages and dependencies
         run: |
-          make install
+          cd python_files && make install
       - name: lint with pylint
         run: |
-          make lint
+          cd python_files && make lint
       - name: test with pytest
         run: |
-          make test
+          cd python_files && make test
       - name: format with black 
         run: |
-          make format
+          cd python_files && make format

@@ -1,5 +1,4 @@
-name: Rust Test with Github Actions
-
+name: Rust CI/CD
 on:
   push:
     branches:
@@ -13,11 +12,11 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      WORKING_DIR: rust_files
+      WORKING_DIR: rust_files 
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Install Rust
       uses: actions-rs/toolchain@v1
@@ -25,24 +24,20 @@ jobs:
         toolchain: stable
         override: true
 
-    - name: Check
-      run: make check
-      working-directory: ${{ env.WORKING_DIR }}
-
     - name: Format
-      run: make format
+      run: cargo fmt --all -- --check
       working-directory: ${{ env.WORKING_DIR }}
 
     - name: Test
-      run: make test
+      run: cargo test -- --test-threads 1 --nocapture
       working-directory: ${{ env.WORKING_DIR }}
 
     - name: Release
-      run: make release
+      run: cargo build --release
       working-directory: ${{ env.WORKING_DIR }}
 
     - name: Upload Binary Artifact
-      uses: actions/upload-artifact@v4 #v3 is scheduled for deprecation Nov 30 2024 check marketplace
+      uses: actions/upload-artifact@v4
       with:
-        name: release-binary
-        path: ${{ env.WORKING_DIR }}/target/release/sqlite
+        name: CLI Binary
+        path: ${{ env.WORKING_DIR }}/target/release/rust_files 
