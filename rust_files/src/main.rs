@@ -3,7 +3,8 @@
 use clap::{Parser, Subcommand};
 use rusqlite::{Connection, Result};
 use rust_files::{create_table, load_data, query, query_delete, query_update}; //import library logic
-// sys.info for timing tests 
+use std::time::Instant;
+// sys.info for timing tests
 //use std::time::{Duration, Instant};
 //Here we define a struct (or object) to hold our CLI arguments
 //for #[STUFF HERE] syntax, these are called attributes. Dont worry about them
@@ -44,7 +45,8 @@ enum Commands {
     #[command(alias = "u", short_flag = 'u')]
     Update {
         table_name: String,
-        new_value_condition: String,
+        column_name: String,
+        new_value: String,
         incident_key: i32,
     },
     ///Pass a table name to drop
@@ -53,6 +55,9 @@ enum Commands {
         table_name: String,
         incident_key: i32,
     },
+    /// Creating a speed test
+    #[command(alias = "s", short_flag = 's')]
+    SpeedTest { query_string: String },
 }
 
 fn main() -> Result<()> {
@@ -71,8 +76,7 @@ fn main() -> Result<()> {
                 "Loading data into table '{}' from '{}'",
                 table_name, file_path
             );
-            load_data(&conn, &table_name, &file_path)
-                .expect("Failed to load data from csv");
+            load_data(&conn, &table_name, &file_path).expect("Failed to load data from csv");
         }
         Commands::Create { table_name } => {
             println!("Creating Table {}", table_name);
@@ -84,19 +88,39 @@ fn main() -> Result<()> {
         }
         Commands::Update {
             table_name,
-            new_value_condition,
+            new_value,
             incident_key,
+            column_name,
         } => {
             println!(
                 "Updating table '{}' with '{}' where {}",
-                table_name, new_value_condition, incident_key
+                table_name, new_value, incident_key
             );
-            query_update(&conn, &table_name, &new_value_condition, incident_key)
+            query_update(&conn, &table_name, &column_name, &new_value, &incident_key)
                 .expect("Failed to update table");
         }
-        Commands::Delete {table_name, incident_key } => {
+        Commands::Delete {
+            table_name,
+            incident_key,
+        } => {
             println!("Deleting {} from {} ", incident_key, table_name);
             query_delete(&conn, &table_name, &incident_key).expect("Failed to drop incident");
+        }
+        Commands::SpeedTest { query_string } => {
+            println!("Starting Rust speed test...");
+
+            // Measure the time for get_mean
+            let start = Instant::now();
+
+            let _ = query(&conn, &query_string);
+
+            let duration = start.elapsed();
+
+            println!(
+                "Rust took: {} microseconds to complete the load and save operation.",
+                duration.as_micros()
+            );
+            println!("End of Rust speed test. The result can be found in the test_speed folder.");
         }
     }
     Ok(())

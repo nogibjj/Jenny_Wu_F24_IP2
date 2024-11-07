@@ -32,13 +32,7 @@ pub fn load_data(
 
         conn.execute(
             &insert_query,
-            params![
-                incident_key,
-                occur_date,
-                boro,
-                vic_sex,
-                vic_race
-            ],
+            params![incident_key, occur_date, boro, vic_sex, vic_race],
         )?;
     }
 
@@ -60,7 +54,7 @@ pub fn create_table(conn: &Connection, table_name: &str) -> Result<()> {
             vic_race TEXT
         )",
         table_name
-    ); 
+    );
     println!("{:?}", create_query);
     conn.execute(&create_query, [])?;
     println!("Table '{}' created successfully.", table_name);
@@ -80,32 +74,16 @@ pub fn query(conn: &Connection, query_string: &str) -> Result<()> {
         let boro: String = row.get(2)?;
         let vic_sex: String = row.get(3)?;
         let vic_race: String = row.get(4)?;
-        Ok((
-            incident_key,
-            occur_date,
-            boro,
-            vic_sex,
-            vic_race,
-        ))
+        Ok((incident_key, occur_date, boro, vic_sex, vic_race))
     })?;
 
     // Iterate over the rows and print the results
     for row in rows {
-        let (
-            incident_key,
-            occur_date,
-            boro,
-            vic_sex,
-            vic_race,
-        ) = row?;
+        let (incident_key, occur_date, boro, vic_sex, vic_race) = row?;
 
         println!(
             "incident_key: {}, Occur Date: {}, Boro: {}, Victim Sex: {}, Victim Race: {}",
-            incident_key,
-            occur_date,
-            boro,
-            vic_sex,
-            vic_race,
+            incident_key, occur_date, boro, vic_sex, vic_race,
         );
     }
 
@@ -116,15 +94,18 @@ pub fn query(conn: &Connection, query_string: &str) -> Result<()> {
 pub fn query_update(
     conn: &Connection,
     table_name: &str,
-    new_value_condition: &str,
-    incident_key: i32,
-) -> Result<()> {
+    column_name: &str,
+    new_value: &str,
+    incident_key: &i32,
+) -> Result<(), rusqlite::Error> {
+    // Prepare the SQL update statement with placeholders
     let query = format!(
-        "UPDATE {} SET {} WHERE Incident_Key {}",
-        table_name, new_value_condition, incident_key
+        "UPDATE {} SET {} = ? WHERE incident_key = ?",
+        table_name, column_name
     );
+
     // Execute the update query with `new_value` and `incident_key` as parameters
-    conn.execute(&query, [])?;
+    conn.execute(&query, params![new_value, incident_key])?;
     println!("Updated successfully.");
     Ok(())
 }
