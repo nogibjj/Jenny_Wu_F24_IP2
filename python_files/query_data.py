@@ -53,46 +53,20 @@ def query_delete(database, table, Incident_Key):
 
 
 def query_1(database, table):
-    """Queries the db for 10 Incidents Against a F/BLK Victim
-    in the Streets of the Bronx"""
+    """Queries the db for all incidences on 2023-12-29"""
     conn = sqlite3.connect(database)
     cursor = conn.cursor()
 
     # Corrected SQL query
     query = f"""
-        SELECT Incident_Key 
+        SELECT *
         FROM {table} 
-        WHERE Boro = 'BRONX' 
-        AND Location_Class_Desc = 'STREET' 
-        AND Victim_Sex = 'F' 
-        AND Victim_Race = 'BLACK' 
-        LIMIT 10
+        WHERE Occur_Date= '2023-12-29T00:00:00.000' 
     """
-
     cursor.execute(query)
-    print("10 Incidents Against a F/BLK Victim in the Streets of the Bronx:")
+    print("Incidents on 2023-12-29")
     query_1_result = cursor.fetchall()
     print(query_1_result)
-    cursor.close()
-    conn.close()
-    return "Query is complete!"
-
-
-def query_2(database, table):
-    """Queries the db for all incidences on 4/19/2008"""
-    conn = sqlite3.connect(database)
-    cursor = conn.cursor()
-
-    # Corrected SQL query
-    query = f"""
-        SELECT Incident_Key, Boro, Perp_Sex, Perp_Race, Victim_Sex, Victim_Race
-        FROM {table} 
-        WHERE Occur_Date= '04/19/2008' 
-    """
-    cursor.execute(query)
-    print("Incidents on 04/19/2008")
-    query_2_result = cursor.fetchall()
-    print(query_2_result)
     cursor.close()
     conn.close()
     return "Query is complete!"
