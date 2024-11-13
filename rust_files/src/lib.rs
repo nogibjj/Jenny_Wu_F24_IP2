@@ -3,7 +3,6 @@ use rusqlite::{params, Connection, Result};
 use std::error::Error;
 use std::fs::File; // For loading CSV and capturing errors
 
-
 //load data from a file path to a table
 pub fn load_data(
     conn: &Connection,
