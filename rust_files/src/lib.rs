@@ -3,6 +3,7 @@ use rusqlite::{params, Connection, Result};
 use std::error::Error;
 use std::fs::File; // For loading CSV and capturing errors
 
+
 //load data from a file path to a table
 pub fn load_data(
     conn: &Connection,
@@ -113,7 +114,7 @@ pub fn query_update(
 // Delete a specific row based on the `Incident_Key` from the specified table
 pub fn query_delete(conn: &Connection, table_name: &str, incident_key: &i32) -> Result<()> {
     let query = format!(
-        "DELETE FROM {} WHERE Incident_Key = {}",
+        "DELETE FROM {} WHERE incident_Key = {}",
         table_name, incident_key
     );
     conn.execute(&query, [])?;

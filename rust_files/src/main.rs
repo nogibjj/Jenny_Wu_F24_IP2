@@ -56,7 +56,7 @@ enum Commands {
         incident_key: i32,
     },
     /// Creating a speed test
-    #[command(alias = "s", short_flag = 's')]
+    #[command(alias = "t", short_flag = 't')]
     SpeedTest { query_string: String },
 }
 
@@ -64,7 +64,7 @@ fn main() -> Result<()> {
     //Here we parse the CLI arguments and store them in the args object
     let args = Cli::parse();
     //generate connection
-    let conn = Connection::open("my_database.db")?;
+    let conn = Connection::open("nypd_shooting.db")?;
 
     //Here we can match the behavior on the subcommand and call our lib logic
     match args.command {
@@ -119,8 +119,7 @@ fn main() -> Result<()> {
             println!(
                 "Rust took: {} microseconds to complete the load and save operation.",
                 duration.as_micros()
-            );
-            println!("End of Rust speed test. The result can be found in the test_speed folder.");
+            )
         }
     }
     Ok(())
