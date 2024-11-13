@@ -12,20 +12,24 @@ jobs:
     
     steps:
       - uses: actions/checkout@v3
+      
       - name: Setup Python 3.12.7
         uses: actions/setup-python@v1
         with: 
           python-version: 3.12.7
           
       - name: install packages and dependencies
-        run: |
-          make install
+        run: make install
+        working-directory: python_files
+          
       - name: lint with pylint
-        run: |
-          make lint
+        run: make lint
+        working-directory: python_files
+          
       - name: test with pytest
-        run: |
-          make test
+        run: make test
+        working-directory: python_files
+          
       - name: format with black 
-        run: |
-          make format
+        run: make format
+        working-directory: python_files
