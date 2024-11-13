@@ -27,27 +27,27 @@ def transform(
             c.execute(
                 f"""
             CREATE TABLE {table_name} (
-                incident_Key INTEGER,
-                occur_date TEXT,
-                occur_time TEXT, 
-                boro TEXT,
-                loc_of_occur_desc TEXT, 
-                precinct NUMBER,
-                jurisdiction_code INTEGER,
-                location_class_desc TEXT,
-                loc_desc TEXT,
-                stat_murder_flag BOOL,
-                perp_age_group TEXT,
-                perp_sex TEXT,
-                perp_race TEXT,
-                vicitm_age_group TEXT,
-                victim_sex TEXT,
-                victim_race TEXT,
-                x_coord TEXT,
-                y_coord TEXT,
-                latitide_coord FLOAT,
-                longitude_coord FLOAT,
-                long_lat FLOAT
+                Incident_Key INTEGER,
+                Occur_Date TEXT,
+                Occur_Time TEXT, 
+                Boro TEXT,
+                Loc_of_occur_desc TEXT, 
+                Precinct NUMBER,
+                Jurisdiction_Code INTEGER,
+                Location_Class_Desc TEXT,
+                Loc_Desc TEXT,
+                Stat_Murder_Flag BOOL,
+                Perp_Age_Group TEXT,
+                Perp_Sex TEXT,
+                Perp_Race TEXT,
+                Vicitm_Age_Group TEXT,
+                Victim_Sex TEXT,
+                Victim_Race TEXT,
+                X_Coord TEXT,
+                Y_Coord TEXT,
+                Latitide_Coord FLOAT,
+                Longitude_Coord FLOAT,
+                Long_Lat FLOAT
             )
             """
             )

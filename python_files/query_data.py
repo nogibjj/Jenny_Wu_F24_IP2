@@ -59,9 +59,9 @@ def query_1(database, table):
 
     # Corrected SQL query
     query = f"""
-        SELECT *
+        SELECT "Incident_key", "Occur_Date", "Boro", "Victim_sex", "Victim_race"
         FROM {table} 
-        WHERE Occur_Date= '2023-12-29T00:00:00.000' 
+        WHERE Occur_Date= '12/29/2023' 
     """
     cursor.execute(query)
     print("Incidents on 2023-12-29")
