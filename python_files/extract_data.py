@@ -1,5 +1,5 @@
 import requests
-import pandas as pd
+#import pandas as pd
 
 """
 Extract a dataset from a URL and place it into a database
