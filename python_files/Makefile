@@ -1,3 +1,4 @@
+
 install:
 	pip install --upgrade pip &&\
 		pip install -r requirements.txt
@@ -9,4 +10,15 @@ lint:
 	ruff check *.py 
 	
 test:
-	python -m pytest -vv test_*.py 
+	python -m pytest *.py 
+
+check:
+	python main.py
+	git config --local user.email "action@github.com"; \
+	git config --local user.name "Github Action"; \
+	git add .; \
+	git commit -m "test"; \
+	git push; \
+
+
+all: install lint format test 
