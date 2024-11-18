@@ -1,5 +1,6 @@
 # Jenny_Wu_F24_MP7 & IP2.
 [![Rust CI/CD](https://github.com/nogibjj/Jenny_Wu_F24_IP2/actions/workflows/rust_actions.yml/badge.svg)](https://github.com/nogibjj/Jenny_Wu_F24_IP2/actions/workflows/rust_actions.yml)
+[![Python Test with Github Actions](https://github.com/nogibjj/Jenny_Wu_F24_IP2/actions/workflows/python_actions.yml/badge.svg)](https://github.com/nogibjj/Jenny_Wu_F24_IP2/actions/workflows/python_actions.yml)
 
 ## Project #2: Rust CLI Binary with SQLite
 
@@ -9,17 +10,22 @@
 The purpose of this project is to take an existing python project, convert it to Rust, and compare the speed and efficiency of both scripts. This projects demonstrates how to perform CRUD operations in both Rust and Python, using a CLI (Command Line Integration) Tool. 
 
 ## Project Guidelines: 
-Rust source code: The code should comprehensively understand Rust's syntax and unique features.
-Use of LLM: In your README, explain how you utilized an LLM in your coding process.
-SQLite Database: Include a SQLite database and demonstrate CRUD (Create, Read, Update, Delete) operations.
-Optimized Rust Binary: Include a process that generates an optimized Rust binary as a Gitlab Actions artifact that can be downloaded.
-README.md: A file that clearly explains what the project does, its dependencies, how to run the program, and how Gitlab Copilot was used.
-Github/Gitlab Actions: A workflow file that tests, builds, and lints your Rust code.
-Video Demo: A YouTube link in README.md showing a clear, concise walkthrough and demonstration of your CLI binary.
+- Rust source code: The code should comprehensively understand Rust's syntax and unique features.
+- Use of LLM: In your README, explain how you utilized an LLM in your coding process.
+- SQLite Database: Include a SQLite database and demonstrate CRUD (Create, Read, Update, Delete) operations.
+- Optimized Rust Binary: Include a process that generates an optimized Rust binary as a Gitlab Actions artifact that can be downloaded.
+- README.md: A file that clearly explains what the project does, its dependencies, how to run the program, and how Gitlab Copilot was used.
+- Github/Gitlab Actions: A workflow file that tests, builds, and lints your Rust code.
+- Video Demo: A YouTube link in README.md showing a clear, concise walkthrough and demonstration of your CLI binary.
+
+***
+### Video Walkthrough of Project
+https://youtu.be/Gpq2Xs4Ztqc
 
 ***
 
-## Binary Artifact: https://github.com/nogibjj/Jenny_Wu_F24_IP2/actions/runs/11717299977/artifacts/2156028161
+## Binary Artifact: 
+https://github.com/nogibjj/Jenny_Wu_F24_IP2/actions/runs/11813241699/artifacts/2180650678
 
 ## LLM Usage: 
 To help me complete the project, I utilized Codeium to supplement my numerous variable inputs and ChatGPT to check my code. I found that using Codeium was helpful in their suggestions as to how to move forward with my code once I started type a couple of lines to demonstrate what I wanted to achieve. As such, when inputting the list of variables and their respective variable formats, it was quite easy. I used ChatGPT to check my code when I encountered errors and for it to walk me through some of the Rust schemas. I thought that having a bot support helped me learn what I was missing and get me acquainted and recognize common errors I was consistently running into.
@@ -56,7 +62,7 @@ Where
 
 In this project, as we are looking to create a table named nypd_shooting for the recorded NYPD cases of shootings. 
 ```
-cd rust_files -- -c "nypd_shooting"
+cd rust_files && cargo run -- -c "nypd_shooting"
 ```
 ![alt text](screenshots/create_table.png)
 
@@ -143,6 +149,13 @@ Where
     table_name: the name of the table previously created 
     
     incident_key: the uniqiue ID of the observation within the nypd_shooting dataset
+
+In this dataset, we would type the following code to delete observation #244608249
+
+```
+cargo run -- -d "nypd_shooting" 244608249    
+
+```
     
 ![alt text](screenshots/delete.png)
 
@@ -163,6 +176,7 @@ To return the speed of the Rust query code that pulls the first 5 rows of the da
 cargo run -- -t "SELECT * FROM nypd_shooting LIMIT 5"
 
 ```
+![alt text](screenshots/rust_test.png)
 
 To return the speed of the Python query code, please run the following command. This command redirects the directory into the main folder, enters the python_files folder, where all the python files are hosted, and then runs the Python file that holds the code that returns the speed of querying the same SQL command as in the Rust command. This should return the same results as in Rust, but at almost ~28x slower. 
 
@@ -170,5 +184,6 @@ To return the speed of the Python query code, please run the following command. 
 cd .. && cd python_files && python time_test.py
 
 ```
-### Video Walkthrough of Project
+![alt text](screenshots/python_test.png)
+
 
