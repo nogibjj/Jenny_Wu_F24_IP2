@@ -1,8 +1,8 @@
 from datetime import datetime
-from query_data import query_1
+from query_data import query_read
 
 start = datetime.now()
-query_1(database="nypd_shooting.db", table="nypd_shooting")
+query_read(database="nypd_shooting.db", table="nypd_shooting")
 end = datetime.now()
 
 start_mirco = start.microsecond
